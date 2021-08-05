@@ -1,0 +1,34 @@
+{
+    "name": "shortest-url",
+    "version": "1.0.0",
+    "description": "URL shortening service",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "husky install"
+    },
+    "repository": {
+        "type": "git",
+        "url": "http://finn-gmbh-aukhms@git.codesubmit.io/finn-gmbh/the-shortest-url-1-cmtnsk"
+    },
+    "author": "Pasan Gamaetige",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "morgan": "^1.10.0"
+    },
+    "devDependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-airbnb-base": "^14.2.1",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.23.4",
+        "husky": "^7.0.1",
+        "lint-staged": "^11.1.1",
+        "nodemon": "^2.0.12",
+        "prettier": "2.3.2"
+    },
+    "lint-staged": {
+        "*.js": "eslint --cache --fix",
+        "*.{js,css,md}": "prettier --write"
+    }
+}

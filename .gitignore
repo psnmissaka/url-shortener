@@ -1,0 +1,4 @@
+# files to be ignored from VCS
+.idea
+node_modules
+.eslintcache
