@@ -1,8 +1,8 @@
 const { shortUrlMap } = require('../../sampleData/data');
 
 // generates a base62 based short link string based on a random number generated
-const generateShortLinkStr = () => {
-    let randomNumber = Math.floor(Math.random() * 36000000000);
+const generateShortLinkStr = (number) => {
+    let randomNumber = number || Math.floor(Math.random() * 36000000000);
     const base62Charset =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 

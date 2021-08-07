@@ -4,8 +4,9 @@
     "description": "URL shortening service",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "prepare": "husky install"
+        "test": "jest",
+        "prepare": "husky install",
+        "start": "nodemon index.js"
     },
     "repository": {
         "type": "git",
@@ -14,18 +15,23 @@
     "author": "Pasan Gamaetige",
     "license": "ISC",
     "dependencies": {
+        "compression": "^1.7.4",
         "express": "^4.17.1",
-        "morgan": "^1.10.0"
+        "morgan": "^1.10.0",
+        "validator": "^13.6.0"
     },
     "devDependencies": {
         "eslint": "^7.32.0",
         "eslint-config-airbnb-base": "^14.2.1",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.23.4",
+        "eslint-plugin-jest": "^24.4.0",
         "husky": "^7.0.1",
+        "jest": "^27.0.6",
         "lint-staged": "^11.1.1",
         "nodemon": "^2.0.12",
-        "prettier": "2.3.2"
+        "prettier": "2.3.2",
+        "supertest": "^6.1.4"
     },
     "lint-staged": {
         "*.js": "eslint --cache --fix",

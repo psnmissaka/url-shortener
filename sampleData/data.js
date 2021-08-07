@@ -38,5 +38,9 @@ shortUrlMap.set('aaaavc', {
     url: 'https://www.thegreatcodeadventure.com/mocking-http-requests-in-golang/',
     created: new Date(),
 });
+shortUrlMap.set('EUR5DX', {
+    url: 'https://news.ycombinator.com/',
+    created: new Date(),
+});
 
 module.exports = { shortUrlMap };
