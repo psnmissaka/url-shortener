@@ -1,24 +1,33 @@
-const validator = require('validator');
 const { generateShortUrl, getLongUrl } = require('../services/urlService');
+const {
+    validateEncodeBody,
+    validateDecodeBody,
+} = require('../validators/requestBodyValidator');
 const errorMessages = require('../constants/errorMessages');
+const { logger } = require('../config/logger');
 
 // returns the encoded short url link given a original link
 const encodeUrl = (req, res) => {
-    if (!validator.isURL(req.body.url)) {
-        res.status(400).send({ error: errorMessages.INVALID_URL_400 });
+    try {
+        validateEncodeBody(req.body);
+    } catch (e) {
+        res.status(400).send({ error: e.message });
         return;
     }
 
     const body = {
         shortLink: generateShortUrl(req.body.url),
     };
+    logger.info(`URL generated ${body.shortLink}`);
     res.json(body).status(200);
 };
 
 // decodes the short url link and returns the original link
 const decodeUrl = (req, res) => {
-    if (!validator.isURL(req.body.shortUrl)) {
-        res.status(400).send({ error: errorMessages.INVALID_URL_400 });
+    try {
+        validateDecodeBody(req.body);
+    } catch (e) {
+        res.status(400).send({ error: e.message });
         return;
     }
 

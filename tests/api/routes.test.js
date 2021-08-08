@@ -16,12 +16,32 @@ describe('API endpoint testing', () => {
             );
         });
 
-        test('ger error response when invalid URL is sent', async () => {
+        test('ger error response when empty URL is sent', async () => {
             const response = await request
                 .post('/encode')
                 .send({ url: '' })
                 .set('Accept', 'application/json');
             expect(response.status).toBe(400);
+            expect(response.body.error).toBe(
+                'URL parameter is missing from the request body',
+            );
+        });
+
+        test('ger error response when invalid URL pattern is sent', async () => {
+            const response = await request
+                .post('/encode')
+                .send({ url: 'http://test.' })
+                .set('Accept', 'application/json');
+            expect(response.status).toBe(400);
+            expect(response.body.error).toBe('URL property pattern is invalid');
+        });
+
+        test('ger error response when no url is sent', async () => {
+            const response = await request.post('/encode');
+            expect(response.status).toBe(400);
+            expect(response.body.error).toBe(
+                'URL parameter is missing from the request body',
+            );
         });
     });
 
@@ -49,7 +69,17 @@ describe('API endpoint testing', () => {
                 .send({ shortUrl: 'http://sho' })
                 .set('Accept', 'application/json');
             expect(response.status).toBe(400);
-            expect(response.body.error).toEqual('URL property is invalid');
+            expect(response.body.error).toEqual(
+                'URL property pattern is invalid',
+            );
+        });
+
+        test('ger error response when no short URL is sent', async () => {
+            const response = await request.post('/decode');
+            expect(response.status).toBe(400);
+            expect(response.body.error).toEqual(
+                'URL parameter is missing from the request body',
+            );
         });
     });
 

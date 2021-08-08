@@ -3,4 +3,4 @@
 .eslintcache
 coverage
 node_modules
-
+logs/*
