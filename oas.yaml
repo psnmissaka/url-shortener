@@ -1,0 +1,104 @@
+swagger: '2.0'
+info:
+    description: 'This is a URL shortener service API'
+    version: '1.0.0'
+    title: 'URL Shortener'
+    contact:
+        email: 'info@short.est'
+host: 'localhost:3000'
+basePath: '/'
+schemes:
+    - 'http'
+paths:
+    /encode:
+        post:
+            summary: 'Encode a URL to a short URL'
+            description: 'Given a URL, this API endpoint return a Short URL that could be used'
+            operationId: 'encodeURL'
+            consumes:
+                - 'application/json'
+            produces:
+                - 'application/json'
+            parameters:
+                - in: 'body'
+                  name: 'body'
+                  description: 'An object which contains a URL'
+                  required: true
+                  schema:
+                      $ref: '#/definitions/EncodeRequestBody'
+            responses:
+                '200':
+                    description: 'successful operation'
+                    schema:
+                        type: 'object'
+                        $ref: '#/definitions/SuccessEncodeResponse'
+                '400':
+                    description: 'Bad request'
+                    schema:
+                        type: 'object'
+                        $ref: '#/definitions/ErrorResponse'
+    /decode:
+        post:
+            summary: 'Decodes the short URL'
+            description: 'Given a short URL, this API endpoint returns the original(long) URL'
+            operationId: 'decodeURL'
+            consumes:
+                - 'application/json'
+            produces:
+                - 'application/json'
+            parameters:
+                - in: 'body'
+                  name: 'body'
+                  description: 'An object which contains a short URL'
+                  required: true
+                  schema:
+                      $ref: '#/definitions/DecodeRequestBody'
+            responses:
+                '200':
+                    description: 'successful operation'
+                    schema:
+                        type: 'object'
+                        $ref: '#/definitions/SuccessDecodeResponse'
+                '400':
+                    description: 'Bad request'
+                    schema:
+                        type: 'object'
+                        $ref: '#/definitions/ErrorResponse'
+                '404':
+                    description: 'Not Found'
+                    schema:
+                        type: 'object'
+                        $ref: '#/definitions/ErrorResponse'
+
+definitions:
+    EncodeRequestBody:
+        type: 'object'
+        properties:
+            url:
+                type: 'string'
+                description: 'This is the original (long) URL which a client wants to shorten'
+    DecodeRequestBody:
+        type: 'object'
+        properties:
+            shortUrl:
+                type: 'string'
+                description: 'Short URL which client needs to be decoded'
+
+    SuccessEncodeResponse:
+        type: 'object'
+        properties:
+            shortLink:
+                type: 'string'
+                description: 'This is the short URL generated from the original(long) URL'
+    SuccessDecodeResponse:
+        type: 'object'
+        properties:
+            decodedUrl:
+                type: 'string'
+                description: 'This is the original URL decoded from the short URL'
+    ErrorResponse:
+        type: 'object'
+        properties:
+            error:
+                type: 'string'
+                description: 'Description of the error'

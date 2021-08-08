@@ -11,6 +11,11 @@ const encodeUrl = (req, res) => {
     try {
         validateEncodeBody(req.body);
     } catch (e) {
+        logger.error(
+            `Encode URL: Request body validation failed: ${JSON.stringify(
+                req.body,
+            )} : ${e.message}`,
+        );
         res.status(400).send({ error: e.message });
         return;
     }
@@ -18,7 +23,6 @@ const encodeUrl = (req, res) => {
     const body = {
         shortLink: generateShortUrl(req.body.url),
     };
-    logger.info(`URL generated ${body.shortLink}`);
     res.json(body).status(200);
 };
 
@@ -27,6 +31,11 @@ const decodeUrl = (req, res) => {
     try {
         validateDecodeBody(req.body);
     } catch (e) {
+        logger.error(
+            `Decode URL: Request body validation failed: ${JSON.stringify(
+                req.body,
+            )} : ${e.message}`,
+        );
         res.status(400).send({ error: e.message });
         return;
     }
@@ -34,6 +43,7 @@ const decodeUrl = (req, res) => {
     const shortUrlId = req.body.shortUrl.split('/')[3];
 
     if (!getLongUrl(shortUrlId)) {
+        logger.error(`Decode URL: Cannot find short URL id: ${shortUrlId}`);
         res.status(404).send({ error: errorMessages.SHORT_URL_404 });
         return;
     }
