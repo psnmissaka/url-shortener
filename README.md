@@ -1,33 +1,62 @@
-### Objective
+# URL Shortener
 
-Your assignment is to implement a URL shortening service using Python and any framework.
+This is a URL shortener service built in Node.JS. The API exposes two endpoints which will encode URL to a short URL and another
+which returns the original URL when short URL is sent.
 
-### Brief
+## Development
 
-ShortLink is a URL shortening service where you enter a URL such as https://codesubmit.io/library/react and it returns a short URL such as http://short.est/GeAi9K.
+The API has been developed with NodeJS and express.
 
-### Tasks
+For linting and code formatting [ESlint](https://eslint.org/) and [Prettier](https://prettier.io/) has been used.
 
--   Implement assignment using:
-    -   Language: **Python**
-    -   Framework: **any framework**
-    -   Two endpoints are required
-        -   /encode - Encodes a URL to a shortened URL
-        -   /decode - Decodes a shortened URL to its original URL.
-    -   Both endpoints should return JSON
--   There is no restriction on how your encode/decode algorithm should work. You just need to make sure that a URL can be encoded to a short URL and the short URL can be decoded to the original URL. **You do not need to persist short URLs to a database. Keep them in memory.**
--   Provide detailed instructions on how to run your assignment in a separate markdown file
--   Provide API tests for both endpoints
+For testing [Jest framework](https://jestjs.io/) is used along with supertest for API endpoint testing.
 
-### Evaluation Criteria
+For logging we use [morgan](https://www.npmjs.com/package/morgan) and [winston](https://www.npmjs.com/package/winston).
 
--   **Python** best practices
--   API implemented featuring a /encode and /decode endpoint
+### for development
 
-### CodeSubmit
+When you are in development, you can use `npm run dev`.
 
-Please organize, design, test and document your code as if it were going into production - then push your changes to the master branch. After you have pushed your code, you may submit the assignment on the assignment page.
+### for testing
 
-All the best and happy coding,
+Run `npm run test` for running the tests.
 
-The finn GmbH Team
+## Production
+
+The application is dockerized for running in production.
+When running in production `NODE_ENV` is set for `production`. We are also
+using [PM2](https://pm2.keymetrics.io/) process manager for running the
+application in the production environment.
+
+Following section contains how we can build the docker images of the application
+and run a container from the image.
+
+### How to build the image
+
+Image can be built by running the following command
+`docker build . -t <username>/url-shortener`
+
+### How to run the docker container with the API
+
+`docker run -p 3000:3000 -d <username>/url-shortener`
+
+## How to use the API
+
+The API documentation has been done with Swagger API spec. You can easily test out the API via Swagger UI. Once the API is up and running
+you can navigate to `http://localhost:3000/api-docs/` to view the swagger UI.
+
+There are two API endpoint exposed through the API,
+
+-   `/encode` - `POST` for encoding a URL to a short URL
+-   `/decode` - `POST` for decoding a short URL to a long URL
+
+For testing out an API endpoint, you can choose the API endpoint dropdown from the swagger UI.
+
+Once you select **Try it out** button under the `/encode` API endpoint, you can view body param object which you can edit.
+
+Please enter a URL of your choice, for the `url` value.
+
+Then press the **Execute** button. This would trigger the API endpoint and return a short URL.
+
+For testing out the `/decode` endpoint, follow the same steps. You can use the short URL you used to
+encode from the ealier step.
